@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des livres</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Liste des livres</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+                <li><a href="{% url 'user_dashboard' %}">Tableau de bord</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sélectionner</th>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Genre</th>
+                        <th>Disponible</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>
+                            {% if book.available %}
+                            <input type="checkbox" name="selected_books" value="{{ book.id }}">
+                            {% else %}
+                            <span>Indisponible</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.genre }}</td>
+                        <td>{{ book.available }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Emprunter les livres sélectionnés</button>
+        </form>
+    </main>
+</body>
+</html>

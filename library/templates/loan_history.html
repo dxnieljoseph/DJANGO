@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Historique des emprunts</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Livre</th>
+            <th>Date d'emprunt</th>
+            <th>Date de retour</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for loan in loans %}
+        <tr>
+            <td>{{ loan.book.title }}</td>
+            <td>{{ loan.borrow_date }}</td>
+            <td>
+                {% if loan.return_date %}
+                    {{ loan.return_date }}
+                {% else %}
+                    Non rendu
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

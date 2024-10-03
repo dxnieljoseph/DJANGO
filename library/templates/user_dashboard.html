@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Bibliothèque - Tableau de bord</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Ma Bibliothèque</h1>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li>Bienvenue, {{ user.username }} !</li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Se déconnecter</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Se connecter</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% if user.is_authenticated %}
+            <h2>Bienvenue à l'API de gestion de bibliothèque</h2>
+            <ul>
+                <li><a href="/api/books/">Liste des livres</a></li>
+                <li><a href="/api/users/">Liste des utilisateurs</a></li>
+                <li><a href="/api/loans/">Liste des emprunts</a></li>
+            </ul>
+        {% else %}
+            <h2>Veuillez vous connecter pour accéder à votre tableau de bord</h2>
+            <a href="{% url 'login' %}">Se connecter</a>
+        {% endif %}
+    </main>
+</body>
+</html>
